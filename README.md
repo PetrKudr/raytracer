@@ -11,7 +11,7 @@ How to build:
   - Add %M2_HOME%/bin to the Path variable
 2. Change directory to ".../RayTracer" (where the POM file is located)
 3. Type 'mvn clean', then 'mvn compile' and then 'mvn install'
-4. RayTracer-<version>-jar-with-dependencies.jar under the target directory is an executable ray tracer
+4. RayTracer-\<version\>-jar-with-dependencies.jar under the target directory is an executable ray tracer
 
 
 To get help execute it without any params:
