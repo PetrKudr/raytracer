@@ -12,3 +12,20 @@ How to build:
 2. Change directory to ".../RayTracer" (where the POM file is located)
 3. Type 'mvn clean', then 'mvn compile' and then 'mvn install'
 4. RayTracer-<version>-jar-with-dependencies.jar under the target directory is an executable ray tracer
+
+
+To get help execute it without any params:
+
+java -jar RayTracer-1.0-jar-with-dependencies.jar
+
+To render built-in scene 1 type
+
+java -jar RayTracer-1.0-jar-with-dependencies.jar -scene default_1 -output image_1 -resolution_x 512 -resolution_y 512
+
+To render built-in scene 2 (cow model) type
+
+java -jar RayTracer-1.0-jar-with-dependencies.jar -scene default_2 -output image_2 -resolution_x 256 -resolution_y 256
+
+To render own scene type
+
+java -jar RayTracer-1.0-jar-with-dependencies.jar -scene \<path/to/scene.xml\> -output \<image_name\> -resolution_x \<resX\> -resolution_y \<resY\>
