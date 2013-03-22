@@ -1,4 +1,4 @@
-package ru.spb.petrk.scenerenderer.parse;
+package ru.spb.petrk.scenerenderer.parser;
 
 /**
  *

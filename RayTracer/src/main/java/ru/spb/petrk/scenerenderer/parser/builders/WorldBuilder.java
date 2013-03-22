@@ -1,10 +1,10 @@
-package ru.spb.petrk.scenerenderer.parse.builders;
+package ru.spb.petrk.scenerenderer.parser.builders;
 
 import java.util.ArrayList;
 import java.util.List;
-import ru.spb.petrk.scenerenderer.parse.ElementContext;
-import ru.spb.petrk.scenerenderer.parse.ElementHandler;
-import ru.spb.petrk.scenerenderer.parse.World;
+import ru.spb.petrk.scenerenderer.parser.ElementContext;
+import ru.spb.petrk.scenerenderer.parser.ElementHandler;
+import ru.spb.petrk.scenerenderer.parser.World;
 import ru.spb.petrk.scenerenderer.scene.Camera;
 import ru.spb.petrk.scenerenderer.scene.Light;
 import ru.spb.petrk.scenerenderer.scene.SceneImpl;

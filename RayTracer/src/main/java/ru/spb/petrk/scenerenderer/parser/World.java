@@ -1,4 +1,4 @@
-package ru.spb.petrk.scenerenderer.parse;
+package ru.spb.petrk.scenerenderer.parser;
 
 import ru.spb.petrk.scenerenderer.scene.Camera;
 import ru.spb.petrk.scenerenderer.scene.Scene;

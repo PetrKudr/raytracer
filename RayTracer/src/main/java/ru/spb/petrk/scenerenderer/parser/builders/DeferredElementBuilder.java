@@ -1,6 +1,6 @@
-package ru.spb.petrk.scenerenderer.parse.builders;
+package ru.spb.petrk.scenerenderer.parser.builders;
 
-import ru.spb.petrk.scenerenderer.parse.ElementHandler;
+import ru.spb.petrk.scenerenderer.parser.ElementHandler;
 
 /**
  *

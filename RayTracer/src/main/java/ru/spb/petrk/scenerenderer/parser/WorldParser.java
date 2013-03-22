@@ -1,4 +1,4 @@
-package ru.spb.petrk.scenerenderer.parse;
+package ru.spb.petrk.scenerenderer.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,8 +10,8 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import ru.spb.petrk.scenerenderer.parse.builders.AbstractElementBuilder;
-import ru.spb.petrk.scenerenderer.parse.builders.WorldBuilder;
+import ru.spb.petrk.scenerenderer.parser.builders.AbstractElementBuilder;
+import ru.spb.petrk.scenerenderer.parser.builders.WorldBuilder;
 
 /**
  *

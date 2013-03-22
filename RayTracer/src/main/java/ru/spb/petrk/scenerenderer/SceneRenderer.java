@@ -14,8 +14,8 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import ru.spb.petrk.scenerenderer.parse.World;
-import ru.spb.petrk.scenerenderer.parse.WorldParser;
+import ru.spb.petrk.scenerenderer.parser.World;
+import ru.spb.petrk.scenerenderer.parser.WorldParser;
 import ru.spb.petrk.scenerenderer.scene.Snapshot;
 import ru.spb.petrk.scenerenderer.ui.ImagePanel;
 

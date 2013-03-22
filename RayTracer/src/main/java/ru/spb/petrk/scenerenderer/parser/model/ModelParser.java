@@ -1,4 +1,4 @@
-package ru.spb.petrk.scenerenderer.parse.model;
+package ru.spb.petrk.scenerenderer.parser.model;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

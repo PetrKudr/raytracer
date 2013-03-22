@@ -1,8 +1,8 @@
-package ru.spb.petrk.scenerenderer.parse.builders;
+package ru.spb.petrk.scenerenderer.parser.builders;
 
-import ru.spb.petrk.scenerenderer.parse.ElementContext;
-import ru.spb.petrk.scenerenderer.parse.ElementHandler;
-import ru.spb.petrk.scenerenderer.parse.PropertyNames;
+import ru.spb.petrk.scenerenderer.parser.ElementContext;
+import ru.spb.petrk.scenerenderer.parser.ElementHandler;
+import ru.spb.petrk.scenerenderer.parser.PropertyNames;
 import ru.spb.petrk.scenerenderer.scene.Material;
 import ru.spb.petrk.scenerenderer.scene.primitives.Cone;
 import ru.spb.petrk.scenerenderer.util.Vector3;
