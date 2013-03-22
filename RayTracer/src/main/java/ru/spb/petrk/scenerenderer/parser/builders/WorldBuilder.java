@@ -22,7 +22,7 @@ public class WorldBuilder extends AbstractElementBuilder<World> {
     
     private Camera camera;
     
-
+    
     public WorldBuilder(ElementContext parentContext, FinishCallback<World> callback) {
         super(parentContext, callback);
     }

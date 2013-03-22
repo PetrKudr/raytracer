@@ -6,6 +6,8 @@ import ru.spb.petrk.scenerenderer.scene.Camera;
 import ru.spb.petrk.scenerenderer.scene.CameraImpl;
 import ru.spb.petrk.scenerenderer.scene.tracing.RayTracerImpl;
 import ru.spb.petrk.scenerenderer.scene.tracing.refraction.FresnelRefractionStrategy;
+import ru.spb.petrk.scenerenderer.scene.tracing.refraction.RefractionStrategy;
+import ru.spb.petrk.scenerenderer.scene.tracing.refraction.SchlickRefractionStrategy;
 import ru.spb.petrk.scenerenderer.util.Vector3;
 
 /**
@@ -25,6 +27,8 @@ class CameraBuilder extends AbstractElementBuilder<Camera> {
     private double screenWidthAngle;
     
     private double screenHeightAngle;
+    
+    private String refractionMethod;
 
     
     public CameraBuilder(ElementContext context, FinishCallback<Camera> callback) {
@@ -87,14 +91,25 @@ class CameraBuilder extends AbstractElementBuilder<Camera> {
                 }
                 
             });            
+        } else if ("refraction_method".equals(name)) {
+            return new StringValueBuilder(parentContext, new FinishCallback<String>() {
+
+                @Override
+                public void handle(String value) {
+                    CameraBuilder.this.refractionMethod = value;
+                }
+                
+            });
         }
         return null;
     }
 
     @Override
     public Camera build() {
+        RefractionStrategy refractionStrategy = "schlick".equals(refractionMethod) ? new SchlickRefractionStrategy() : new FresnelRefractionStrategy();
+        
         return new CameraImpl(
-                new RayTracerImpl(Vector3.ZERO_VECTOR, new FresnelRefractionStrategy()),
+                new RayTracerImpl(Vector3.ZERO_VECTOR, refractionStrategy),
                 lookAt.subtract(position),
                 upDirection,
                 position,

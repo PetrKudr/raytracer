@@ -7,7 +7,10 @@
         <look_at x="0" y="0" z="0"/>
         <fov_x>0.75</fov_x>
         <fov_y>0.75</fov_y>
-        <dist_to_near_plane>1</dist_to_near_plane>
+        <dist_to_near_plane>1</dist_to_near_plane>  
+        
+        <!-- Refraction approximation could be 'fresnel' (by default) or 'schlick' -->
+        <refraction_method>fresnel</refraction_method>                      
     </camera>
    
     <light>
