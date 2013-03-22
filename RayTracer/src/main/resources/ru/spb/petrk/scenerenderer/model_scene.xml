@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<scene>
+    <camera>
+        <pos x="14" y="0" z="4"/>
+        <up  x="0" y="1" z="0"/>
+        <look_at x="0" y="0" z="0"/>
+        <fov_x>0.75</fov_x>
+        <fov_y>0.75</fov_y>
+        <dist_to_near_plane>1</dist_to_near_plane>
+    </camera>
+   
+    <light>
+        <pos x="16" y="16" z="4"/>
+    </light>
+   
+    <!-- Sphere material -->
+    <object>
+        <model file_name="classpath:/ru/spb/petrk/scenerenderer/model.obj" />
+        <material>
+            <ambient  x="0.3" y="0" z="0"/>
+            <diffuse  x="0.98" y="0.48" z="0.4"/>
+            <specular x="0.4" y="0.5" z="0.6"/>
+            <specular_power>128</specular_power>
+            <reflection_power>0</reflection_power>
+            <refractive_index>1</refractive_index>
+            <transparency>-1</transparency>                           
+        </material>      
+    </object>
+   
+</scene>
