@@ -17,7 +17,7 @@ public class IntegerValueBuilder extends AbstractElementBuilder<Integer> {
     }   
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         throw new UnsupportedOperationException("Integer parameter could not have nested parameters.");
     }
 

@@ -23,7 +23,7 @@ class SphereBuilder extends AbstractElementBuilder<Sphere> {
     }    
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         if ("center".equals(name)) {
             return new VectorBuilder(parentContext, new FinishCallback<Vector3>() {
 

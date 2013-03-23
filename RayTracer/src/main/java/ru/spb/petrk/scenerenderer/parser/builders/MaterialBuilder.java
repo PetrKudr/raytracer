@@ -32,7 +32,7 @@ class MaterialBuilder extends AbstractElementBuilder<Material> {
     }
     
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         if ("diffuse".equals(name)) {
             return new VectorBuilder(parentContext, new FinishCallback<Vector3>() {
 

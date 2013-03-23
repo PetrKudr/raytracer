@@ -17,7 +17,7 @@ public class StringValueBuilder extends AbstractElementBuilder<String> {
     }   
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         throw new UnsupportedOperationException("String parameter could not have nested parameters.");
     }
 

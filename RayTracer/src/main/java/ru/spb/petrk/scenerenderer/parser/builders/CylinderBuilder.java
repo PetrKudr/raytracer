@@ -25,7 +25,7 @@ class CylinderBuilder extends AbstractElementBuilder<Cylinder> {
     }
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         if ("bottom".equals(name)) {
             return new VectorBuilder(parentContext, new FinishCallback<Vector3>() {
 

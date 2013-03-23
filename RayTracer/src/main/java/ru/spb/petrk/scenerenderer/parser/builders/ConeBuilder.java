@@ -27,7 +27,7 @@ class ConeBuilder extends AbstractElementBuilder<Cone> {
     }
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         if ("top".equals(name)) {
             return new VectorBuilder(parentContext, new FinishCallback<Vector3>() {
 

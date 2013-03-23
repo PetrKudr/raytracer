@@ -17,7 +17,7 @@ class DoubleValueBuilder extends AbstractElementBuilder<Double> {
     }   
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         throw new UnsupportedOperationException("Double parameter could not have nested parameters.");
     }
 

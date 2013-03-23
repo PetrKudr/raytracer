@@ -22,7 +22,7 @@ public class ModelBuilder extends AbstractElementBuilder<List<Triangle>> {
     }
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         if ("file_name".equals(name)) {
             return new StringValueBuilder(parentContext, new FinishCallback<String>() {
 

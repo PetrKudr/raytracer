@@ -28,7 +28,7 @@ public class WorldBuilder extends AbstractElementBuilder<World> {
     }
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         if ("scene".equals(name)) {
             return this;
         } else if ("camera".equals(name)) {

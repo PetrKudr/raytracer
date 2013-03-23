@@ -1,5 +1,6 @@
 package ru.spb.petrk.scenerenderer.parser.builders;
 
+import ru.spb.petrk.scenerenderer.parser.DeferredElementHandler;
 import java.util.ArrayList;
 import java.util.List;
 import ru.spb.petrk.scenerenderer.parser.ElementContext;
@@ -25,8 +26,6 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
     
     private final ElementContext context;
     
-    private final List<DeferredElementBuilder<? extends Primitive>> deferredBuilders = new ArrayList<DeferredElementBuilder<? extends Primitive>>();
-    
     private final List<SceneObject> sceneObjects = new ArrayList<SceneObject>();    
     
 
@@ -36,7 +35,7 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
     }
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         if ("material".equals(name)) {
             return new MaterialBuilder(context, new FinishCallback<Material>() {
 
@@ -47,7 +46,7 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
                 
             });
         } else if ("plane".equals(name)) {
-            DeferredElementBuilder deferredBuilder = new DeferredElementBuilder(new PlaneBuilder(context, new FinishCallback<Plane>() {
+            return new DeferredElementHandler(new PlaneBuilder(context, new FinishCallback<Plane>() {
 
                 @Override
                 public void handle(Plane value) {
@@ -55,10 +54,8 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
                 }
                 
             }));
-            deferredBuilders.add(deferredBuilder);
-            return deferredBuilder;
         } else if ("sphere".equals(name)) {
-            DeferredElementBuilder deferredBuilder = new DeferredElementBuilder(new SphereBuilder(context, new FinishCallback<Sphere>() {
+            return new DeferredElementHandler(new SphereBuilder(context, new FinishCallback<Sphere>() {
 
                 @Override
                 public void handle(Sphere value) {
@@ -66,10 +63,8 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
                 }
                 
             }));
-            deferredBuilders.add(deferredBuilder);
-            return deferredBuilder;
         } else if ("triangle".equals(name)) {
-            DeferredElementBuilder deferredBuilder = new DeferredElementBuilder(new TriangleBuilder(context, new FinishCallback<Triangle>() {
+            return new DeferredElementHandler(new TriangleBuilder(context, new FinishCallback<Triangle>() {
 
                 @Override
                 public void handle(Triangle value) {
@@ -77,10 +72,8 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
                 }
                 
             }));
-            deferredBuilders.add(deferredBuilder);
-            return deferredBuilder;
         } else if ("cylinder".equals(name)) {
-            DeferredElementBuilder deferredBuilder = new DeferredElementBuilder(new CylinderBuilder(context, new FinishCallback<Cylinder>() {
+            return new DeferredElementHandler(new CylinderBuilder(context, new FinishCallback<Cylinder>() {
 
                 @Override
                 public void handle(Cylinder value) {
@@ -88,10 +81,8 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
                 }
                 
             }));
-            deferredBuilders.add(deferredBuilder);
-            return deferredBuilder;
         } else if ("cone".equals(name)) {
-            DeferredElementBuilder deferredBuilder = new DeferredElementBuilder(new ConeBuilder(context, new FinishCallback<Cone>() {
+            return new DeferredElementHandler(new ConeBuilder(context, new FinishCallback<Cone>() {
 
                 @Override
                 public void handle(Cone value) {
@@ -99,10 +90,8 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
                 }
                 
             }));
-            deferredBuilders.add(deferredBuilder);
-            return deferredBuilder;
         } else if ("model".equals(name)) {
-            DeferredElementBuilder deferredBuilder = new DeferredElementBuilder(new ModelBuilder(context, new FinishCallback<List<Triangle>>() {
+            return new DeferredElementHandler(new ModelBuilder(context, new FinishCallback<List<Triangle>>() {
 
                 @Override
                 public void handle(List<Triangle> value) {
@@ -110,8 +99,6 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
                 }
                 
             }));
-            deferredBuilders.add(deferredBuilder);
-            return deferredBuilder;
         }
         
         return null;
@@ -119,9 +106,6 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
 
     @Override
     protected List<SceneObject> build() {
-        for (DeferredElementBuilder builder : deferredBuilders) {
-            builder.launchFinish();
-        }
         return sceneObjects;
     }    
     

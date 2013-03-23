@@ -22,7 +22,7 @@ class VectorBuilder extends AbstractElementBuilder<Vector3> {
     }
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         if ("x".equalsIgnoreCase(name)) {
             return new DoubleValueBuilder(parentContext, new FinishCallback<Double>() {
                 

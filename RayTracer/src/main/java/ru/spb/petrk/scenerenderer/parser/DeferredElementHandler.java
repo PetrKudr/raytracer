@@ -1,22 +1,20 @@
-package ru.spb.petrk.scenerenderer.parser.builders;
-
-import ru.spb.petrk.scenerenderer.parser.ElementHandler;
+package ru.spb.petrk.scenerenderer.parser;
 
 /**
  *
  * @author PetrK
  */
-class DeferredElementBuilder<T> implements ElementHandler<T> {
+public final class DeferredElementHandler<T> implements ElementHandler<T> {
     
-    private final AbstractElementBuilder<T> builder;
+    private final ElementHandler<T> handler;
     
     
-    public DeferredElementBuilder(AbstractElementBuilder<T> builder) {
-        this.builder = builder;
+    public DeferredElementHandler(ElementHandler<T> handler) {
+        this.handler = handler;
     }
     
     public void launchFinish() {
-        builder.finish();
+        handler.finish();
     }
     
     /*
@@ -27,17 +25,17 @@ class DeferredElementBuilder<T> implements ElementHandler<T> {
 
     @Override
     public ElementHandler getHandler(String name) {
-        return builder.getHandler(name);
+        return handler.getHandler(name);
     }
     
     @Override
     public void start() {
-        builder.start();
+        handler.start();
     }
 
     @Override
     public void body(String body) {
-        builder.body(body);
+        handler.body(body);
     }
 
     @Override

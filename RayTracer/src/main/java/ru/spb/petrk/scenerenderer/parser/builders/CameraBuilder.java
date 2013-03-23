@@ -36,7 +36,7 @@ class CameraBuilder extends AbstractElementBuilder<Camera> {
     }
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         if ("pos".equals(name)) {
             return new VectorBuilder(parentContext, new FinishCallback<Vector3>() {
 

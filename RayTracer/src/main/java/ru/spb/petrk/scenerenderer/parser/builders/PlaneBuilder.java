@@ -23,7 +23,7 @@ class PlaneBuilder extends AbstractElementBuilder<Plane> {
     }    
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         if ("point".equals(name)) {
             return new VectorBuilder(parentContext, new FinishCallback<Vector3>() {
 

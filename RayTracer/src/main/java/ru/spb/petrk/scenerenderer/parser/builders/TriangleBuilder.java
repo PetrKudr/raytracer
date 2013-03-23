@@ -23,7 +23,7 @@ class TriangleBuilder extends AbstractElementBuilder<Triangle> {
     }
 
     @Override
-    public ElementHandler getHandler(String name) {
+    public ElementHandler createHandler(String name) {
         if ("pos".equals(name) && paramCount < 3) {
             return new VectorBuilder(parentContext, new FinishCallback<Vector3>() {
                 
