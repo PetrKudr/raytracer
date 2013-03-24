@@ -140,7 +140,7 @@ public class SceneRenderer {
 //                        showImage(image);
 //                    }
 //                });
-            }            
+            }
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
         } catch (FileNotFoundException ex) {
