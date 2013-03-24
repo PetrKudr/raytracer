@@ -64,7 +64,7 @@ public class WorldBuilder extends AbstractElementBuilder<World> {
     
     @Override
     protected World build() {
-        return new World(new SceneImpl(1, sceneObjects, lights), camera);
+        return new World(new SceneImpl(1, 0, sceneObjects, lights), camera);
     }
 
 }

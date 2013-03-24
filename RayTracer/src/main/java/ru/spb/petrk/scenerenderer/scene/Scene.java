@@ -10,6 +10,8 @@ public interface Scene {
     
     double getRefractiveIndex();
     
+    double getAttenuationCoefficient();
+    
     Collection<SceneObject> getSceneObjects();
     
     Collection<Light> getLights();

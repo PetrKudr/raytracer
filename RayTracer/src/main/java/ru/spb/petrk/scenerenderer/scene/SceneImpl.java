@@ -11,13 +11,16 @@ public class SceneImpl implements Scene {
     
     private final double refractiveIndex;
     
+    private final double attenuatonCoefficient;
+    
     private final List<SceneObject> sceneObjects;
     
     private final List<Light> lights;
     
     
-    public SceneImpl(double refractiveIndex, List<SceneObject> primitives, List<Light> lights) {
+    public SceneImpl(double refractiveIndex, double attenuatonCoefficient, List<SceneObject> primitives, List<Light> lights) {
         this.refractiveIndex = refractiveIndex;
+        this.attenuatonCoefficient = attenuatonCoefficient;
         this.sceneObjects = primitives;
         this.lights = lights;
     }
@@ -35,6 +38,11 @@ public class SceneImpl implements Scene {
     @Override
     public Collection<Light> getLights() {
         return lights;
+    }
+
+    @Override
+    public double getAttenuationCoefficient() {
+        return attenuatonCoefficient;
     }
 
 }

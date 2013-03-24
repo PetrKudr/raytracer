@@ -27,22 +27,32 @@ abstract class AbstractRefractionStrategy implements RefractionStrategy {
             double refractionRatio = scene.getRefractiveIndex() / material.getRefractiveIndex();
 
             double cos = preparedNorm.dotProduct(ray.getDirection());
+            
+            double attenuation = 1;
+            double attenuationCoef = scene.getAttenuationCoefficient();
 
             if (cos > 0) {
                 // Ray is inside object
                 preparedNorm = preparedNorm.inverse();
                 refractionRatio = 1 / refractionRatio;
+                attenuationCoef = material.getAttenuationCoefficient();
                 cos = -cos;
             }
+            
+            if (!MathUtils.equals(attenuationCoef, 0)) {
+                attenuation = Math.pow(Math.E, -attenuationCoef * point.subtract(ray.getFrom()).getLength());
+            }               
 
-            double refractionSinSquare = 1 - refractionRatio * refractionRatio * (1 - cos * cos);
-            double b = cos * refractionRatio + Math.sqrt(refractionSinSquare);
+            if (refractionPower * ray.getPower() *  attenuation >= MathUtils.RAY_POWER_THRESHOLD) {
+                double refractionSinSquare = 1 - refractionRatio * refractionRatio * (1 - cos * cos);
+                double b = cos * refractionRatio + Math.sqrt(refractionSinSquare);
 
-            if (refractionSinSquare >= MathUtils.GEOMETRY_THRESHOLD) {
-                Vector3 refractionDirection = ray.getDirection().multiply(refractionRatio).subtract(preparedNorm.multiply(b)).normalize();
-                Ray refractionRay = new RayImpl(point, refractionDirection, ray.getPower() * refractionPower);
-                Vector3 refractionColor = tracer.color(scene, refractionRay);
-                return refractionColor;
+                if (refractionSinSquare >= MathUtils.GEOMETRY_THRESHOLD) {
+                    Vector3 refractionDirection = ray.getDirection().multiply(refractionRatio).subtract(preparedNorm.multiply(b)).normalize();
+                    Ray refractionRay = new RayImpl(point, refractionDirection, ray.getPower() * refractionPower * attenuation);
+                    Vector3 refractionColor = tracer.color(scene, refractionRay);
+                    return refractionColor;
+                }
             }
         }
         

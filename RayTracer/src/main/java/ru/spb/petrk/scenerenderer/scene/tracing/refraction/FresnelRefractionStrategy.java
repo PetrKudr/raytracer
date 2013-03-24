@@ -3,7 +3,6 @@ package ru.spb.petrk.scenerenderer.scene.tracing.refraction;
 import ru.spb.petrk.scenerenderer.scene.Material;
 import ru.spb.petrk.scenerenderer.scene.Scene;
 import ru.spb.petrk.scenerenderer.scene.tracing.Ray;
-import ru.spb.petrk.scenerenderer.util.MathUtils;
 import ru.spb.petrk.scenerenderer.util.Vector3;
 
 /**
@@ -18,7 +17,7 @@ public class FresnelRefractionStrategy extends AbstractRefractionStrategy {
             double cos = Math.abs(ray.getDirection().dotProduct(norm));
             double fresnel = 1 / Math.pow(1 + cos, material.getTransparency());
             return fresnel;
-        }
+            }
         return 0;
     }
 

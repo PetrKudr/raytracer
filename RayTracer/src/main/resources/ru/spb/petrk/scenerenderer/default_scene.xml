@@ -56,7 +56,7 @@
             <specular_power>64</specular_power>
             <reflection_power>0.4</reflection_power>
             <refractive_index>1</refractive_index>
-            <transparency>-1</transparency>                           
+            <transparency>-1</transparency>
         </material>      
     </object> 
    
@@ -133,7 +133,8 @@
             <specular_power>0</specular_power>
             <reflection_power>0</reflection_power>
             <refractive_index>1.04</refractive_index>
-            <transparency>0.7</transparency>
+            <transparency>0.8</transparency>
+            <attenuation>0.1</attenuation>
         </material>      
     </object>
 </scene>

@@ -21,9 +21,11 @@ public class MaterialImpl implements Material {
     private final double refractiveIndex;
     
     private final double transparency;
+    
+    private final double attenuationCoefficient;
 
     
-    public MaterialImpl(Vector3 diffuse, Vector3 ambient, Vector3 specular, double specularPower, double reflectionPower, double refractiveIndex, double transparency) {
+    public MaterialImpl(Vector3 diffuse, Vector3 ambient, Vector3 specular, double specularPower, double reflectionPower, double refractiveIndex, double transparency, double attenuationCoefficient) {
         this.diffuse = diffuse;
         this.ambient = ambient;
         this.specular = specular;
@@ -31,6 +33,7 @@ public class MaterialImpl implements Material {
         this.reflectionPower = reflectionPower;
         this.refractiveIndex = refractiveIndex;
         this.transparency = transparency;
+        this.attenuationCoefficient = attenuationCoefficient;
     }    
 
     @Override
@@ -66,6 +69,11 @@ public class MaterialImpl implements Material {
     @Override
     public double getTransparency() {
         return transparency;
+    }
+
+    @Override
+    public double getAttenuationCoefficient() {
+        return attenuationCoefficient;
     }
 
 }

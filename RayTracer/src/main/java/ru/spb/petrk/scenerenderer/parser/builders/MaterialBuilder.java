@@ -26,6 +26,8 @@ class MaterialBuilder extends AbstractElementBuilder<Material> {
     
     private double transparency;
     
+    private double attenuation;
+    
 
     public MaterialBuilder(ElementContext parentContext, FinishCallback<Material> callback) {
         super(parentContext, callback);
@@ -96,13 +98,22 @@ class MaterialBuilder extends AbstractElementBuilder<Material> {
                 }
                 
             });            
+        } else if ("attenuation".equals(name)) {
+            return new DoubleValueBuilder(parentContext, new FinishCallback<Double>() {
+
+                @Override
+                public void handle(Double value) {
+                    MaterialBuilder.this.attenuation = value;
+                }
+                
+            });            
         }
         return null;
     }    
 
     @Override
     protected Material build() {
-        return new MaterialImpl(diffuse, ambient, specular, specularPower, reflectionPower, refractiveIndex, transparency);
+        return new MaterialImpl(diffuse, ambient, specular, specularPower, reflectionPower, refractiveIndex, transparency, attenuation);
     }
     
 }

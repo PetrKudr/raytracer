@@ -21,5 +21,7 @@ public interface Material {
     double getRefractiveIndex();
     
     double getTransparency();
+    
+    double getAttenuationCoefficient();
 
 }
