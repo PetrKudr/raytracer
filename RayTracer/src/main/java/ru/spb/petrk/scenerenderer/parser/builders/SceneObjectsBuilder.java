@@ -16,6 +16,7 @@ import ru.spb.petrk.scenerenderer.scene.primitives.Cone;
 import ru.spb.petrk.scenerenderer.scene.primitives.Cylinder;
 import ru.spb.petrk.scenerenderer.scene.primitives.Plane;
 import ru.spb.petrk.scenerenderer.scene.primitives.Sphere;
+import ru.spb.petrk.scenerenderer.scene.primitives.Torus;
 import ru.spb.petrk.scenerenderer.scene.primitives.Triangle;
 
 /**
@@ -86,6 +87,15 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
 
                 @Override
                 public void handle(Cone value) {
+                    SceneObjectsBuilder.this.sceneObjects.add(new SimpleSceneObject(value));
+                }
+                
+            }));
+        } else if ("torus".equals(name)) {
+            return new DeferredElementHandler(new TorusBuilder(context, new FinishCallback<Torus>() {
+
+                @Override
+                public void handle(Torus value) {
                     SceneObjectsBuilder.this.sceneObjects.add(new SimpleSceneObject(value));
                 }
                 

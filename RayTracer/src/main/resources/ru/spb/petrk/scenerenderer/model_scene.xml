@@ -14,7 +14,7 @@
         <pos x="16" y="16" z="4"/>
     </light>
    
-    <!-- Sphere material -->
+    <!-- Cow -->
     <object>
         <model file_name="classpath:/ru/spb/petrk/scenerenderer/model.obj" />
         <material>
@@ -27,5 +27,24 @@
             <transparency>-1</transparency>                           
         </material>      
     </object>
+    
+    <!-- Torus -->
+    <object>
+        <torus>
+            <center x="4.7" y="3.2" z="0"/>
+            <norm x="0" y="1" z="0"/>
+            <inner_radius>0.1</inner_radius>
+            <outer_radius>0.7</outer_radius>
+        </torus>                
+        <material>
+            <ambient  x="0.3" y="0.3" z="0"/>
+            <diffuse  x="0.98" y="0.98" z="0.2"/>
+            <specular x="0.4" y="0.5" z="0.6"/>
+            <specular_power>128</specular_power>
+            <reflection_power>0</reflection_power>
+            <refractive_index>1</refractive_index>
+            <transparency>-1</transparency>                           
+        </material>      
+    </object>    
    
 </scene>
