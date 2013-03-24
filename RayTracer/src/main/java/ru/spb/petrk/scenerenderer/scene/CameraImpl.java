@@ -3,8 +3,6 @@ package ru.spb.petrk.scenerenderer.scene;
 import ru.spb.petrk.scenerenderer.scene.tracing.Ray;
 import ru.spb.petrk.scenerenderer.scene.tracing.RayImpl;
 import ru.spb.petrk.scenerenderer.scene.tracing.RayTracer;
-import ru.spb.petrk.scenerenderer.scene.tracing.RayTracerImpl;
-import ru.spb.petrk.scenerenderer.scene.tracing.refraction.FresnelRefractionStrategy;
 import ru.spb.petrk.scenerenderer.util.MathUtils;
 import ru.spb.petrk.scenerenderer.util.Vector3;
 
@@ -96,7 +94,8 @@ public class CameraImpl implements Camera {
                 Vector3 screenPoint = leftTop.add(right.multiply(2 * xCoefficient)).subtract(up.multiply(2 * yCoefficient));
                 Ray ray = new RayImpl(position, screenPoint.subtract(position).normalize());                
                 
-                picture[x + scanSize * y] = MathUtils.filterColor(tracer.color(scene, ray));
+                // x is inverted because we have got rigth handed basis
+                picture[(xResolution - x - 1) + scanSize * y] = MathUtils.filterColor(tracer.color(scene, ray));
             }
         }
         

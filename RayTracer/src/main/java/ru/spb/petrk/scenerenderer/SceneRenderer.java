@@ -135,11 +135,11 @@ public class SceneRenderer {
 
                 ImageIO.write(image, "png", new File(parameters.getOutput()));
 
-    //            SwingUtilities.invokeLater(new Runnable() {
-    //                public void run() {
-    //                    showImage(image);
-    //                }
-    //            });
+//                SwingUtilities.invokeLater(new Runnable() {
+//                    public void run() {
+//                        showImage(image);
+//                    }
+//                });
             }            
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());

@@ -41,17 +41,26 @@ public class MathUtils {
     }
     
     /**
-     * 
      * @param point - target point
      * @return distance between beginning of this vector and the given point
      */
-    public double distance(Vector3 point1, Vector3 point2) {
+    public static double distance(Vector3 point1, Vector3 point2) {
         return Math.sqrt(
                 MathUtils.sqrDiff(point1.getX(), point2.getX()) +
                 MathUtils.sqrDiff(point1.getY(), point2.getY()) + 
                 MathUtils.sqrDiff(point1.getZ(), point2.getZ())
         );
     }    
+    
+    /**
+     * @param vec1
+     * @param vec2
+     * @return true if vectors are collinear
+     */
+    public static boolean areCollinear(Vector3 vec1, Vector3 vec2) {
+        double cos = vec1.normalize().dotProduct(vec2.normalize());
+        return equals(cos, 1) || equals(cos, -1);
+    }     
     
     // multiplies corresponding components of the vectors
     public static Vector3 merge(Vector3 vec1, Vector3 vec2) {
@@ -60,7 +69,7 @@ public class MathUtils {
                 vec1.getY() * vec2.getY(),
                 vec1.getZ() * vec2.getZ()
         );
-    }    
+    }
     
     /**
      * 

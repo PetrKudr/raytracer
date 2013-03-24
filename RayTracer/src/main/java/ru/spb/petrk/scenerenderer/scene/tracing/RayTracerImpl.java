@@ -68,7 +68,7 @@ public class RayTracerImpl implements RayTracer {
             }          
             
             // Refraction
-            color = color.add(refractionStrategy.refract(this, scene, ray, collisionPoint, collisionNorm, collision.getPrimitive()));
+            color = color.add(refractionStrategy.refract(this, scene, ray, collisionPoint, collisionNorm, collision.getPrimitive()));            
         }
         
         return color.multiply(ray.getPower());
