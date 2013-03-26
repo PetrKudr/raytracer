@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.NumberFormat;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -16,8 +17,10 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import ru.spb.petrk.scenerenderer.parser.World;
 import ru.spb.petrk.scenerenderer.parser.WorldParser;
+import ru.spb.petrk.scenerenderer.scene.Camera;
 import ru.spb.petrk.scenerenderer.scene.Snapshot;
 import ru.spb.petrk.scenerenderer.ui.ImagePanel;
+import ru.spb.petrk.scenerenderer.util.Listener;
 
 
 
@@ -127,8 +130,11 @@ public class SceneRenderer {
                 World world = parser.parse(stream);
 
                 stream.close();
+                
+                Camera camera = world.getCamera();
+                camera.addListener(new ProgressListener(parameters.getXResolution() * parameters.getYResolution()));
 
-                Snapshot snapshot = world.getCamera().makeSnapshot(world.getScene(), parameters.getXResolution(), parameters.getYResolution());
+                Snapshot snapshot = camera.makeSnapshot(world.getScene(), parameters.getXResolution(), parameters.getYResolution());
 
                 final BufferedImage image = new BufferedImage(snapshot.getWidth(), snapshot.getHeight(), BufferedImage.TYPE_INT_RGB);
                 image.setRGB(0, 0, snapshot.getWidth(), snapshot.getHeight(), snapshot.getPicture(), 0, snapshot.getScanSize());
@@ -275,4 +281,26 @@ public class SceneRenderer {
         }       
     }
     
+    private static class ProgressListener implements Listener<Integer> {
+        
+        private final int totalProgress;
+        
+        private final NumberFormat format = NumberFormat.getPercentInstance();
+        
+        private String lastPercent;
+
+        public ProgressListener(int totalProgress) {
+            this.totalProgress = totalProgress;
+        }
+
+        @Override
+        public void process(Integer data) {
+            String percent = format.format(((double)data) / totalProgress);
+            if (!percent.equals(lastPercent)) {
+                System.out.print("Progress: " + percent + "\r");
+                lastPercent = percent;
+            }
+        }
+        
+    }   
 }
