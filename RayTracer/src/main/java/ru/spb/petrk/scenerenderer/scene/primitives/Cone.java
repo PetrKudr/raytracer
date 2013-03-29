@@ -20,49 +20,6 @@ public class Cone extends AbstractPrimitive {
     private final double height;
     
 
-    public static class Builder {
-
-        private Material material;
-        
-        private Vector3 top;
-
-        private Vector3 direction;
-
-        private double angle;
-
-        private double height;  
-
-        public Builder setMaterial(Material material) {
-            this.material = material;
-            return this;
-        }
-
-        public Builder setTop(Vector3 top) {
-            this.top = top;
-            return this;
-        }
-
-        public Builder setDirection(Vector3 direction) {
-            this.direction = direction;
-            return this;
-        }
-
-        public Builder setAngle(double angle) {
-            this.angle = angle;
-            return this;
-        }
-
-        public Builder setHeight(double height) {
-            this.height = height;
-            return this;
-        }
-                
-        public Cone build() {
-            return new Cone(material, top, direction, angle, height);
-        }
-    }    
-    
-
     public Cone(Material material, Vector3 top, Vector3 direction, double angle, double height) {
         super(material);
         this.top = top;

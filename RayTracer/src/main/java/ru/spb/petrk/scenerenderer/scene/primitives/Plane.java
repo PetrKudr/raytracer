@@ -17,35 +17,6 @@ public class Plane extends AbstractPrimitive {
     private Vector3 norm;
 
     
-    public static class Builder {
-
-        private Material material;
-        
-        private Vector3 point;
-        
-        private Vector3 norm;        
-
-        public Builder setMaterial(Material material) {
-            this.material = material;
-            return this;
-        }
-
-        public Builder setPoint(Vector3 point) {
-            this.point = point;
-            return this;
-        }
-
-        public Builder setNorm(Vector3 norm) {
-            this.norm = norm;
-            return this;
-        }
-                
-        public Plane build() {
-            return new Plane(material, point, norm);
-        }
-    }
-    
-    
     public Plane(Material material, Vector3 point, Vector3 norm) {
         super(material);
         this.point = point;
