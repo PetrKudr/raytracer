@@ -29,16 +29,15 @@ public class Plane extends AbstractPrimitive {
     }
 
     @Override
-    public double intersect(Ray ray) {
-        double distance = -1;
-        
+    public double[] intersect(Ray ray) {
         double projectionOfDirectionOnNorm = ray.getDirection().dotProduct(norm);
         
         if (projectionOfDirectionOnNorm < 0) {
-            distance = - (norm.dotProduct(ray.getFrom().subtract(point))) / projectionOfDirectionOnNorm;
+            double distance = - (norm.dotProduct(ray.getFrom().subtract(point))) / projectionOfDirectionOnNorm;
+            return new double[] {distance};
         }
         
-        return distance;
+        return EMPTY;
     }
     
 }

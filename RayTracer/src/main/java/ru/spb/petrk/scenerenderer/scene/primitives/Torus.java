@@ -1,5 +1,6 @@
 package ru.spb.petrk.scenerenderer.scene.primitives;
 
+import java.util.Arrays;
 import ru.spb.petrk.scenerenderer.scene.Material;
 import ru.spb.petrk.scenerenderer.scene.tracing.Ray;
 import ru.spb.petrk.scenerenderer.util.MathUtils;
@@ -40,7 +41,7 @@ public class Torus extends AbstractPrimitive {
     }
 
     @Override
-    public double intersect(Ray ray) {
+    public double[] intersect(Ray ray) {
         Vector3 Q = ray.getFrom().subtract(center);        
         double u = norm.dotProduct(Q);
         double v = norm.dotProduct(ray.getDirection());
@@ -60,17 +61,17 @@ public class Torus extends AbstractPrimitive {
         double[] roots = Solvers.solveQuartic(A, B, C, D, E);
         
         if (roots == null || roots.length == 0) {
-            return -1;
+            return EMPTY;
         }
 
         // Find the closest intersecting point        
         for (int i = 0; i < roots.length; i++) {
             if (roots[i] > MathUtils.GEOMETRY_THRESHOLD) {
-                return roots[i];
+                return Arrays.copyOfRange(roots, i, roots.length);
             }
         }
 
-        return -1;                  
+        return EMPTY;                  
     }
 
 }

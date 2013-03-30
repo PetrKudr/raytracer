@@ -53,11 +53,11 @@ public class ModelSceneObject implements SceneObject {
         Primitive nearestPrimitive = null;
         
         for (Primitive primitive : triangles) {
-            double distance = primitive.intersect(ray);
+            double distance[] = primitive.intersect(ray);
 
-            if (distance >= MathUtils.GEOMETRY_THRESHOLD && distance < minDistance) {
+            if (distance.length > 0 && distance[0] >= MathUtils.GEOMETRY_THRESHOLD && distance[0] < minDistance) {
                 nearestPrimitive = primitive;
-                minDistance = distance;
+                minDistance = distance[0];
             }
         }
         

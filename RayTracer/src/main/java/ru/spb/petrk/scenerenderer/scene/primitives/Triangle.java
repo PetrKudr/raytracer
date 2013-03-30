@@ -82,7 +82,7 @@ public class Triangle extends AbstractPrimitive {
     }
 
     @Override
-    public double intersect(Ray ray) {
+    public double[] intersect(Ray ray) {
         // Algorithm: http://www.ray-tracing.ru/articles213.html
         
         Vector3 T = ray.getFrom().subtract(v0);
@@ -97,11 +97,11 @@ public class Triangle extends AbstractPrimitive {
             
             if (u >= 0 && v >= 0 && u + v <= 1) {
                 double distance = Q.dotProduct(e2) / pDotE1;
-                return distance;
+                return new double[] {distance};
             }
         }
         
-        return -1;
+        return EMPTY;
     }
  
 }

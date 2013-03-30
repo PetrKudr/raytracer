@@ -1,5 +1,6 @@
 package ru.spb.petrk.scenerenderer.scene.primitives;
 
+import java.util.Arrays;
 import ru.spb.petrk.scenerenderer.scene.Material;
 import ru.spb.petrk.scenerenderer.scene.Primitive;
 import ru.spb.petrk.scenerenderer.scene.tracing.Ray;
@@ -51,7 +52,7 @@ public class Cylinder extends AbstractPrimitive {
     }
 
     @Override
-    public double intersect(Ray ray) {
+    public double[] intersect(Ray ray) {
         double a, b, c;		// Quadratic equation coefficients
 
         Vector3 AO = ray.getFrom().subtract(bottom);
@@ -68,13 +69,8 @@ public class Cylinder extends AbstractPrimitive {
         double distance = -1;
         
         if (roots.length == 1) {
-            if (roots[0] >= MathUtils.GEOMETRY_THRESHOLD) {
-                Vector3 point = ray.getFrom().add(ray.getDirection().multiply(roots[0]));                
-                if (isPointOnCylinder(point)) {
-                    distance = roots[0];
-                } 
-            } else if (roots[0] >= 0) {
-                distance = roots[0];
+            if (roots[0] >= 0) {
+                return roots;
             }
         } else {
             if (roots[0] >= MathUtils.GEOMETRY_THRESHOLD && roots[1] >= MathUtils.GEOMETRY_THRESHOLD) {
@@ -83,19 +79,20 @@ public class Cylinder extends AbstractPrimitive {
 
                 if (isPointOnCylinder(point1)) {
                     if (isPointOnCylinder(point2)) {
-                        distance = Math.min(roots[0], roots[1]);
+                        Arrays.sort(roots);
+                        return roots;
                     } else {
-                        distance = roots[0];
+                        return new double[] {roots[0]};
                     }
                 } else if (isPointOnCylinder(point2)) {
-                    distance = roots[1];
+                    return new double[] {roots[1]};
                 }
             } else if (roots[0] >= 0 || roots[1] >= 0) {
-                distance = Math.max(roots[0], roots[1]);
+                return new double[] {Math.max(roots[0], roots[1])};
             }
         }        
 
-        return distance;
+        return EMPTY;
     }
     
     

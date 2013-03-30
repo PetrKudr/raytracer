@@ -9,6 +9,9 @@ import ru.spb.petrk.scenerenderer.util.Vector3;
  * @author PetrK
  */
 abstract class AbstractPrimitive implements Primitive {
+    
+    protected static final double EMPTY[] = new double[0];
+    
 
     protected Material material;
 

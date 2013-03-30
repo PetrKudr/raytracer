@@ -26,8 +26,8 @@ public interface Primitive {
     /**
      * Intersects ray with object.
      * @param ray - ray
-     * @return distance from ray start point to intersection point. If < 0 than there is no intersection
+     * @return array of distances from ray start point to intersection points sorted in ascending order. 
      */
-    double intersect(Ray ray);
+    double[] intersect(Ray ray);
     
 }

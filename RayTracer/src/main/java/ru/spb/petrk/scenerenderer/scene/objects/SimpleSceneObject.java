@@ -25,10 +25,10 @@ public class SimpleSceneObject implements SceneObject {
 
     @Override
     public Collision trace(Ray ray) {
-        double distance = primitive.intersect(ray);
+        double distance[] = primitive.intersect(ray);
 
-        if (distance >= MathUtils.GEOMETRY_THRESHOLD) {
-            return new Collision(distance, primitive);
+        if (distance.length > 0 && distance[0] >= MathUtils.GEOMETRY_THRESHOLD) {
+            return new Collision(distance[0], primitive);
         }
         
         return null;

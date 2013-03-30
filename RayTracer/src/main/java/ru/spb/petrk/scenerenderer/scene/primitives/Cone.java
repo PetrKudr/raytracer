@@ -35,7 +35,7 @@ public class Cone extends AbstractPrimitive {
     }
 
     @Override
-    public double intersect(Ray ray) {
+    public double[] intersect(Ray ray) {
         Vector3 rayToTop = ray.getFrom().subtract(top);
         
         double AxR = direction.dotProduct(ray.getDirection());
@@ -48,25 +48,24 @@ public class Cone extends AbstractPrimitive {
         
         double roots[] = MathUtils.solveQuadraticEquation(paramA, paramB, paramC);
         
-        if (roots != null) {
-            double minRoot, maxRoot;
-            
+        if (roots != null) {            
             if (roots.length > 1) {
-                minRoot = Math.min(roots[0], roots[1]);
-                maxRoot = Math.max(roots[0], roots[1]);
+                double minRoot = Math.min(roots[0], roots[1]);
+                double maxRoot = Math.max(roots[0], roots[1]);
+                
+                if (checkRoot(ray, minRoot)) {
+                    return new double[] {minRoot, maxRoot};
+                } else if (checkRoot(ray, maxRoot)) {
+                    return new double[] {maxRoot};
+                }                
             } else {
-                minRoot = roots[0];
-                maxRoot = -1;
-            }
-            
-            if (checkRoot(ray, minRoot)) {
-                return minRoot;
-            } else if (checkRoot(ray, maxRoot)) {
-                return maxRoot;
+                if (checkRoot(ray, roots[0])) {
+                    return roots;
+                }                
             }
         }
         
-        return -1;
+        return EMPTY;
     }
     
     private boolean checkRoot(Ray ray, double root) {

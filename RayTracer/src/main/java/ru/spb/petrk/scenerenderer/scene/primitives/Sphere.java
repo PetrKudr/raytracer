@@ -29,7 +29,7 @@ public class Sphere extends AbstractPrimitive {
     }
 
     @Override
-    public double intersect(Ray ray) {
+    public double[] intersect(Ray ray) {
         Vector3 distance = ray.getFrom().subtract(center);
         
         double b = distance.dotProduct(ray.getDirection()); 
@@ -47,10 +47,10 @@ public class Sphere extends AbstractPrimitive {
 
           double t = (min_t >= MathUtils.GEOMETRY_THRESHOLD) ? min_t : max_t;
 
-          return t;
+          return min_t >= MathUtils.GEOMETRY_THRESHOLD ? new double[] {min_t, max_t} : new double[] {max_t};
         }
         
-        return -1;
+        return EMPTY;
     }
     
     public Vector3 getCenter() {
