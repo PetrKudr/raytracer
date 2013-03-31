@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -18,9 +19,28 @@ import org.apache.commons.cli.PosixParser;
 import ru.spb.petrk.scenerenderer.parser.World;
 import ru.spb.petrk.scenerenderer.parser.WorldParser;
 import ru.spb.petrk.scenerenderer.scene.Camera;
+import ru.spb.petrk.scenerenderer.scene.CameraImpl;
+import ru.spb.petrk.scenerenderer.scene.Light;
+import ru.spb.petrk.scenerenderer.scene.LightImpl;
+import ru.spb.petrk.scenerenderer.scene.Material;
+import ru.spb.petrk.scenerenderer.scene.MaterialImpl;
+import ru.spb.petrk.scenerenderer.scene.Primitive;
+import ru.spb.petrk.scenerenderer.scene.Scene;
+import ru.spb.petrk.scenerenderer.scene.SceneImpl;
+import ru.spb.petrk.scenerenderer.scene.SceneObject;
 import ru.spb.petrk.scenerenderer.scene.Snapshot;
+import ru.spb.petrk.scenerenderer.scene.objects.CSGSceneObject;
+import ru.spb.petrk.scenerenderer.scene.objects.SimpleSceneObject;
+import ru.spb.petrk.scenerenderer.scene.objects.csg.CSGObjectNode;
+import ru.spb.petrk.scenerenderer.scene.objects.csg.CSGOperation;
+import ru.spb.petrk.scenerenderer.scene.objects.csg.CSGOperationNode;
+import ru.spb.petrk.scenerenderer.scene.objects.csg.CSGTreeNode;
+import ru.spb.petrk.scenerenderer.scene.primitives.Sphere;
+import ru.spb.petrk.scenerenderer.scene.tracing.RayTracerImpl;
+import ru.spb.petrk.scenerenderer.scene.tracing.refraction.FresnelRefractionStrategy;
 import ru.spb.petrk.scenerenderer.ui.ImagePanel;
 import ru.spb.petrk.scenerenderer.util.Listener;
+import ru.spb.petrk.scenerenderer.util.Vector3;
 
 
 
@@ -30,12 +50,13 @@ public class SceneRenderer {
         
 //        Material sphereMaterial = new MaterialImpl(
 //                new Vector3(0.98, 0.48, 0.4), 
-//                Vector3.ZERO_VECTOR, 
+//                new Vector3(0.4, 0.2, 0.16), 
 //                new Vector3(0.7, 0.7, 0.7), 
 //                128, 
-//                0.5,
+//                0,
 //                1,
-//                -1
+//                -1,
+//                0
 //        );
 //        
 //        Material cylinderMaterial = new MaterialImpl(
@@ -45,9 +66,10 @@ public class SceneRenderer {
 //                64, 
 //                0.4,
 //                1,
-//                -1
+//                -1,
+//                0
 //        ); 
-//        
+        
 //        Material coneMaterial = new MaterialImpl(
 //                new Vector3(0.4, 0.96, 0.6), 
 //                Vector3.ZERO_VECTOR, 
@@ -87,22 +109,22 @@ public class SceneRenderer {
 //                1.04,
 //                0.7
 //        );        
+
+//        CSGObjectNode first = new CSGObjectNode(new SimpleSceneObject(new Sphere(sphereMaterial, new Vector3(0, 0, 0), 1)));
+//        CSGObjectNode second = new CSGObjectNode(new SimpleSceneObject(new Sphere(sphereMaterial, new Vector3(-1, 1, 0), 1)));
+//        CSGObjectNode third = new CSGObjectNode(new SimpleSceneObject(new Sphere(sphereMaterial, new Vector3(1, 1, 0), 1)));
+//        CSGObjectNode fourth = new CSGObjectNode(new SimpleSceneObject(new Sphere(sphereMaterial, new Vector3(0, 1, 1), 1)));
+//        
+//        CSGOperationNode firstSubtraction = new CSGOperationNode(first, second, CSGOperation.subtraction);
+//        CSGOperationNode secondSubtraction = new CSGOperationNode(firstSubtraction, third, CSGOperation.subtraction);
+//        CSGOperationNode thirdSubtraction = new CSGOperationNode(secondSubtraction, fourth, CSGOperation.subtraction);
 //        
 //        Scene scene = new SceneImpl(
 //                1,
-//                Arrays.<Primitive>asList(
-//                      new Triangle(triangleMaterial, new Vector3(-1.5, 0.2, 0.5), new Vector3(-1.05, 0.3, 1), new Vector3(-0.6, 0, 0.6)),
-//                      new Sphere(trasnparentMaterial, new Vector3(0.5, 1, 0), 0.5),
-//                      new Triangle(triangleMaterial, new Vector3(0.6, 0, 0.6), new Vector3(1.05, 0.3, 1), new Vector3(1.5, 0.2, 0.5)),
-//                      new Cone(coneMaterial, new Vector3(0, 0, 0.5), new Vector3(0, 0, -1), Math.PI / 6, 0.8),
-//                      new Cylinder(cylinderMaterial, new Vector3(-0.5, 0, 1), new Vector3(0.5, 0, 1), 0.4),
-//                      new Sphere(sphereMaterial, new Vector3(-1, 0, 0), 0.4),
-//                      new Sphere(sphereMaterial, new Vector3(1, 0, 0), 0.4),
-//                      new Plane(planeMaterial, new Vector3(0, 0, -0.6), new Vector3(0, 0, 1))
-//                ), 
+//                0,
+//                Arrays.<SceneObject>asList(new CSGSceneObject(thirdSubtraction)), 
 //                Arrays.<Light>asList(
-//                    new LightImpl(new Vector3(-4, 4, 2), Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR),
-//                    new LightImpl(new Vector3(4, 4, 2), Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR)
+//                    new LightImpl(new Vector3(0, 4, -2), Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR)
 //                )
 //        );        
 //        
@@ -113,12 +135,18 @@ public class SceneRenderer {
 //                new Vector3(0, 4, 0),
 //                1,
 //                Math.PI / 4,
-//                Math.PI / 4,
-//                1024,
-//                1024
+//                Math.PI / 4
 //        );
 //        
-//        Snapshot snapshot = camera.makeSnapshot(scene);
+//        final Snapshot snapshot = camera.makeSnapshot(scene, 512, 512);
+//        final BufferedImage image = new BufferedImage(snapshot.getWidth(), snapshot.getHeight(), BufferedImage.TYPE_INT_RGB);
+//        image.setRGB(0, 0, snapshot.getWidth(), snapshot.getHeight(), snapshot.getPicture(), 0, snapshot.getScanSize());      
+//        
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                showImage(image);
+//            }
+//        });
 
         try {
             UserParameters parameters = parseCommandLine(args);
@@ -139,13 +167,13 @@ public class SceneRenderer {
                 final BufferedImage image = new BufferedImage(snapshot.getWidth(), snapshot.getHeight(), BufferedImage.TYPE_INT_RGB);
                 image.setRGB(0, 0, snapshot.getWidth(), snapshot.getHeight(), snapshot.getPicture(), 0, snapshot.getScanSize());
 
-                ImageIO.write(image, "png", new File(parameters.getOutput()));
+//                ImageIO.write(image, "png", new File(parameters.getOutput()));
 
-//                SwingUtilities.invokeLater(new Runnable() {
-//                    public void run() {
-//                        showImage(image);
-//                    }
-//                });
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        showImage(image);
+                    }
+                });
             }
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());

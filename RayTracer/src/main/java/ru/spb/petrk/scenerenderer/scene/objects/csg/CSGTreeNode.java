@@ -6,8 +6,6 @@ package ru.spb.petrk.scenerenderer.scene.objects.csg;
  */
 public interface CSGTreeNode<T> {
     
-    CSGTreeNode getParent();
-    
     CSGTreeNode getLeft();
     
     CSGTreeNode getRight();

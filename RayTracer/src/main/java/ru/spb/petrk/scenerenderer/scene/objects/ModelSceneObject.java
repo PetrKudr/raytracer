@@ -1,5 +1,8 @@
 package ru.spb.petrk.scenerenderer.scene.objects;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import ru.spb.petrk.scenerenderer.scene.Primitive;
 import ru.spb.petrk.scenerenderer.scene.SceneObject;
@@ -13,7 +16,7 @@ import ru.spb.petrk.scenerenderer.util.Vector3;
  *
  * @author PetrK
  */
-public class ModelSceneObject implements SceneObject {
+public class ModelSceneObject extends AbstractSceneObject {
     
     private final BoundingBox boundingBox;
 
@@ -48,20 +51,39 @@ public class ModelSceneObject implements SceneObject {
     }
 
     @Override
-    public Collision trace(Ray ray) {
-        double minDistance = Double.POSITIVE_INFINITY;
-        Primitive nearestPrimitive = null;
+    public Collision[] trace(Ray ray) {
+//        double minDistance = Double.POSITIVE_INFINITY;
+//        Primitive nearestPrimitive = null;
+        
+        List<Collision> collisions = new ArrayList<Collision>(4);
         
         for (Primitive primitive : triangles) {
-            double distance[] = primitive.intersect(ray);
+            double distances[] = primitive.intersect(ray);
 
-            if (distance.length > 0 && distance[0] >= MathUtils.GEOMETRY_THRESHOLD && distance[0] < minDistance) {
-                nearestPrimitive = primitive;
-                minDistance = distance[0];
+            if (distances.length > 0 && distances[0] >= MathUtils.GEOMETRY_THRESHOLD) {
+                collisions.add(new Collision(distances[0], primitive));
             }
+            
+//            if (distance.length > 0 && distance[0] >= MathUtils.GEOMETRY_THRESHOLD && distance[0] < minDistance) {
+//                nearestPrimitive = primitive;
+//                minDistance = distance[0];
+//            }
         }
         
-        return nearestPrimitive != null ? new Collision(minDistance, nearestPrimitive) : null;        
+        if (!collisions.isEmpty()) {
+            Collections.sort(collisions, new Comparator<Collision>() {
+
+                @Override
+                public int compare(Collision o1, Collision o2) {
+                    return Double.valueOf(o1.getDistance()).compareTo(o2.getDistance());
+                }
+                
+            });
+            
+            return collisions.toArray(EMPTY);
+        }
+        
+        return EMPTY;
     }    
     
     private double min(double value1, double value2, double value3, double value4) {

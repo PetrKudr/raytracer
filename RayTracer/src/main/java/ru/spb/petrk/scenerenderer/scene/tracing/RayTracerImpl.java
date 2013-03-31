@@ -34,6 +34,10 @@ public class RayTracerImpl implements RayTracer {
             Vector3 collisionPoint = ray.getFrom().add(ray.getDirection().multiply(collision.getDistance()));
             Vector3 collisionNorm = collision.getPrimitive().getNorm(collisionPoint);
             
+            if (collision.isInversed()) {
+                collisionNorm = collisionNorm.inverse();
+            }
+            
             Material material = collision.getPrimitive().getMaterial(collisionPoint);
             
             // Ambient
@@ -86,11 +90,11 @@ public class RayTracerImpl implements RayTracer {
         
         for (SceneObject sceneObject : scene.getSceneObjects()) {
             if (sceneObject.checkIntersectionPossibility(ray)) {
-                Collision collision = sceneObject.trace(ray);
+                Collision collisions[] = sceneObject.trace(ray);
 
-                if (collision != null && collision.getDistance() >= MathUtils.GEOMETRY_THRESHOLD) {
-                    if (nearestCollision == null || nearestCollision.getDistance() > collision.getDistance()) {
-                        nearestCollision = collision;
+                if (collisions.length > 0 && collisions[0].getDistance() >= MathUtils.GEOMETRY_THRESHOLD) {
+                    if (nearestCollision == null || nearestCollision.getDistance() > collisions[0].getDistance()) {
+                        nearestCollision = collisions[0];
                     }
                 }
             }

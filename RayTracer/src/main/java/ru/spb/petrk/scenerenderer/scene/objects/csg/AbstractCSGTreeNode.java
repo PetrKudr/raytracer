@@ -5,9 +5,7 @@ package ru.spb.petrk.scenerenderer.scene.objects.csg;
  * @author PetrK
  */
 public abstract class AbstractCSGTreeNode<T> implements CSGTreeNode<T> {
-    
-    private final CSGTreeNode parent;
-    
+
     private final CSGTreeNode left;
     
     private final CSGTreeNode right;
@@ -15,16 +13,10 @@ public abstract class AbstractCSGTreeNode<T> implements CSGTreeNode<T> {
     private final T data;
     
 
-    public AbstractCSGTreeNode(CSGTreeNode parent, CSGTreeNode left, CSGTreeNode right, T data) {
-        this.parent = parent;
+    public AbstractCSGTreeNode(CSGTreeNode left, CSGTreeNode right, T data) {
         this.left = left;
         this.right = right;
         this.data = data;
-    }
-
-    @Override
-    public CSGTreeNode getParent() {
-        return parent;
     }
 
     @Override

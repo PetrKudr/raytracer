@@ -10,7 +10,7 @@ import ru.spb.petrk.scenerenderer.util.MathUtils;
  *
  * @author PetrK
  */
-public class SimpleSceneObject implements SceneObject {
+public class SimpleSceneObject extends AbstractSceneObject {
 
     private final Primitive primitive;
 
@@ -24,14 +24,22 @@ public class SimpleSceneObject implements SceneObject {
     }
 
     @Override
-    public Collision trace(Ray ray) {
-        double distance[] = primitive.intersect(ray);
-
-        if (distance.length > 0 && distance[0] >= MathUtils.GEOMETRY_THRESHOLD) {
-            return new Collision(distance[0], primitive);
+    public Collision[] trace(Ray ray) {
+        double distances[] = primitive.intersect(ray);
+        
+        if (distances.length > 0 && distances[0] >= MathUtils.GEOMETRY_THRESHOLD) {
+            Collision collisions[] = new Collision[distances.length];
+            
+            int i = 0;
+            
+            for (double distance : distances) {
+                collisions[i++] = new Collision(distance, primitive);
+            }
+            
+            return collisions;
         }
         
-        return null;
+        return EMPTY;
     }
     
 }

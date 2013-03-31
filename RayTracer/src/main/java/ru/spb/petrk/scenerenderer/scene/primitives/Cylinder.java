@@ -90,7 +90,7 @@ public class Cylinder extends AbstractPrimitive {
             } else if (roots[0] >= 0 || roots[1] >= 0) {
                 return new double[] {Math.max(roots[0], roots[1])};
             }
-        }        
+        }
 
         return EMPTY;
     }
