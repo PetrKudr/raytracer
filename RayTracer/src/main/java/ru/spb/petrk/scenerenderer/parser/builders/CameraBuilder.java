@@ -18,7 +18,7 @@ class CameraBuilder extends AbstractElementBuilder<Camera> {
 
     private Vector3 lookAt;
     
-    private Vector3 upDirection;
+    private Vector3 inaccurateUpDirection;
     
     private Vector3 position;
     
@@ -51,7 +51,7 @@ class CameraBuilder extends AbstractElementBuilder<Camera> {
 
                 @Override
                 public void handle(Vector3 value) {
-                    CameraBuilder.this.upDirection = value;
+                    CameraBuilder.this.inaccurateUpDirection = value;
                 }
                 
             });            
@@ -108,10 +108,14 @@ class CameraBuilder extends AbstractElementBuilder<Camera> {
     public Camera build() {
         RefractionStrategy refractionStrategy = "schlick".equals(refractionMethod) ? new SchlickRefractionStrategy() : new FresnelRefractionStrategy();
         
+        Vector3 forward = lookAt.subtract(position);
+        Vector3 right = forward.crossProduct(inaccurateUpDirection);
+        Vector3 up = right.crossProduct(forward);
+        
         return new CameraImpl(
                 new RayTracerImpl(Vector3.ZERO_VECTOR, refractionStrategy),
-                lookAt.subtract(position),
-                upDirection,
+                forward,
+                up,
                 position,
                 screenDistance,
                 screenWidthAngle,

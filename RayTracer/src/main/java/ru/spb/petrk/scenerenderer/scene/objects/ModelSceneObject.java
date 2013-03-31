@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import ru.spb.petrk.scenerenderer.scene.Primitive;
-import ru.spb.petrk.scenerenderer.scene.SceneObject;
 import ru.spb.petrk.scenerenderer.scene.primitives.Triangle;
 import ru.spb.petrk.scenerenderer.scene.tracing.Collision;
 import ru.spb.petrk.scenerenderer.scene.tracing.Ray;

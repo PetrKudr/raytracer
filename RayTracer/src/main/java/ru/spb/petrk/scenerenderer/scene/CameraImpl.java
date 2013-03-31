@@ -30,15 +30,15 @@ public class CameraImpl extends AbstractListenable<Integer> implements Camera {
     private double screenHeightAngle;
 
 
-    public CameraImpl(RayTracer tracer, Vector3 forwardDirection, Vector3 upDirection, Vector3 position, double screenDistance, double screenWidthAngle, double screenHeightAngle) {
-        if (!MathUtils.equals(upDirection.dotProduct(forwardDirection), 0)) {
+    public CameraImpl(RayTracer tracer, Vector3 forward, Vector3 up, Vector3 position, double screenDistance, double screenWidthAngle, double screenHeightAngle) {
+        if (!MathUtils.equals(up.dotProduct(forward), 0)) {
             throw new IllegalArgumentException("Up direction must be orthogonal to forward direction");
         }
         
         this.tracer = tracer;
-        this.forwardDirection = forwardDirection.normalize();
-        this.upDirection = upDirection.normalize();
-        this.rightDirection = this.upDirection.crossProduct(this.forwardDirection);
+        this.forwardDirection = forward.normalize();
+        this.upDirection = up.normalize();
+        this.rightDirection = this.upDirection.crossProduct(this.forwardDirection).normalize();
         this.position = position;
         this.screenDistance = screenDistance;
         this.screenWidthAngle = screenWidthAngle;

@@ -32,7 +32,8 @@ public class CSGDiagramImpl implements CSGDiagram {
                 break;
                 
             case intersection:
-                throw new UnsupportedOperationException("Unsupported operation");
+                emitter = new IntersectionEmitter();
+                break;
                 
             case subtraction:
                 emitter = new SubtrationEmitter();
@@ -132,9 +133,9 @@ public class CSGDiagramImpl implements CSGDiagram {
             
             // change state
             if (fromFirst) {
-                insideFirst = !point.isOut();
+                insideFirst = !point.isGoesOutside();
             } else {
-                insideSecond = !point.isOut();
+                insideSecond = !point.isGoesOutside();
             }
             
             return result;
@@ -179,7 +180,7 @@ public class CSGDiagramImpl implements CSGDiagram {
         @Override
         protected Point handleFromFirst(Point point) {
             if (!isInsideSecond())  {
-                if (!point.isOut()) {
+                if (!point.isGoesOutside()) {
                     if (!isInsideFirst()) {
                         return point;
                     }
@@ -196,10 +197,38 @@ public class CSGDiagramImpl implements CSGDiagram {
         protected Point handleFromSecond(Point point) {
             if (isInsideFirst()) {
                 point.getCollision().setInversed(true);
-                return new Point(point.getCollision(), !point.isOut());
+                return new Point(point.getCollision(), !point.isGoesOutside());
             }
             return null;
         }  
     }
+    
+    private static class IntersectionEmitter extends PointEmitter {
+
+        @Override
+        protected Point handleFromFirst(Point point) {
+            return handle(point, isInsideFirst(), isInsideSecond());
+        }
+
+        @Override
+        protected Point handleFromSecond(Point point) {
+            return handle(point, isInsideSecond(), isInsideFirst());
+        }
+        
+        private Point handle(Point point1, boolean inside1, boolean inside2) {
+            if (inside2) {
+                if (!point1.isGoesOutside()) {
+                    if (!inside1) {
+                        return point1;
+                    }
+                } else {
+                    if (inside1) {
+                        return point1;
+                    }
+                }
+            }
+            return null;            
+        }
+    }    
     
 }

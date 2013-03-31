@@ -30,15 +30,15 @@ public interface CSGDiagram {
         
         private final Collision collision;
         
-        private final boolean out;
+        private final boolean goesOutside;
 
-        public Point(Collision collision, boolean out) {
+        public Point(Collision collision, boolean goesOutside) {
             this.collision = collision;
-            this.out = out;
+            this.goesOutside = goesOutside;
         }
 
-        public boolean isOut() {
-            return out;
+        public boolean isGoesOutside() {
+            return goesOutside;
         }        
 
         public Collision getCollision() {

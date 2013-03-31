@@ -69,7 +69,7 @@ public class SceneRenderer {
 //                -1,
 //                0
 //        ); 
-        
+//        
 //        Material coneMaterial = new MaterialImpl(
 //                new Vector3(0.4, 0.96, 0.6), 
 //                Vector3.ZERO_VECTOR, 
@@ -77,7 +77,8 @@ public class SceneRenderer {
 //                64, 
 //                0.4,
 //                1,
-//                -1              
+//                -1,
+//                0
 //        );
 //        
 //        Material triangleMaterial = new MaterialImpl(
@@ -110,21 +111,22 @@ public class SceneRenderer {
 //                0.7
 //        );        
 
-//        CSGObjectNode first = new CSGObjectNode(new SimpleSceneObject(new Sphere(sphereMaterial, new Vector3(0, 0, 0), 1)));
-//        CSGObjectNode second = new CSGObjectNode(new SimpleSceneObject(new Sphere(sphereMaterial, new Vector3(-1, 1, 0), 1)));
-//        CSGObjectNode third = new CSGObjectNode(new SimpleSceneObject(new Sphere(sphereMaterial, new Vector3(1, 1, 0), 1)));
-//        CSGObjectNode fourth = new CSGObjectNode(new SimpleSceneObject(new Sphere(sphereMaterial, new Vector3(0, 1, 1), 1)));
+//        CSGObjectNode first = new CSGObjectNode(new SimpleSceneObject(new Sphere(sphereMaterial, new Vector3(0.5, 0, 0), 1)));
+//        CSGObjectNode second = new CSGObjectNode(new SimpleSceneObject(new Sphere(cylinderMaterial, new Vector3(-0.5, 0, 0), 1)));
+//        CSGObjectNode third = new CSGObjectNode(new SimpleSceneObject(new Sphere(coneMaterial, new Vector3(0, 1, 1), 1)));
+////        CSGObjectNode fourth = new CSGObjectNode(new SimpleSceneObject(new Sphere(sphereMaterial, new Vector3(0, 1, 1), 1)));
 //        
-//        CSGOperationNode firstSubtraction = new CSGOperationNode(first, second, CSGOperation.subtraction);
-//        CSGOperationNode secondSubtraction = new CSGOperationNode(firstSubtraction, third, CSGOperation.subtraction);
-//        CSGOperationNode thirdSubtraction = new CSGOperationNode(secondSubtraction, fourth, CSGOperation.subtraction);
+//        CSGOperationNode firstOperation = new CSGOperationNode(first, second, CSGOperation.intersection);
+//        CSGOperationNode secondOperation = new CSGOperationNode(firstOperation, third, CSGOperation.subtraction);
+////        CSGOperationNode thirdSubtraction = new CSGOperationNode(secondSubtraction, fourth, CSGOperation.subtraction);
 //        
 //        Scene scene = new SceneImpl(
 //                1,
 //                0,
-//                Arrays.<SceneObject>asList(new CSGSceneObject(thirdSubtraction)), 
+//                Arrays.<SceneObject>asList(new CSGSceneObject(secondOperation)), 
 //                Arrays.<Light>asList(
-//                    new LightImpl(new Vector3(0, 4, -2), Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR)
+//                    new LightImpl(new Vector3(-1, 4, 0), Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR),
+//                    new LightImpl(new Vector3(1, 4, 0), Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR, Vector3.ZERO_VECTOR)
 //                )
 //        );        
 //        
@@ -167,13 +169,13 @@ public class SceneRenderer {
                 final BufferedImage image = new BufferedImage(snapshot.getWidth(), snapshot.getHeight(), BufferedImage.TYPE_INT_RGB);
                 image.setRGB(0, 0, snapshot.getWidth(), snapshot.getHeight(), snapshot.getPicture(), 0, snapshot.getScanSize());
 
-//                ImageIO.write(image, "png", new File(parameters.getOutput()));
+                ImageIO.write(image, "png", new File(parameters.getOutput()));
 
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        showImage(image);
-                    }
-                });
+//                SwingUtilities.invokeLater(new Runnable() {
+//                    public void run() {
+//                        showImage(image);
+//                    }
+//                });
             }
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
@@ -232,9 +234,10 @@ public class SceneRenderer {
     private static InputStream loadScene(String path) throws FileNotFoundException {
         if (path.equals("default_1")) {
             return SceneRenderer.class.getResourceAsStream("default_scene.xml");
-        }
-        if (path.equals("default_2")) {
+        } else if (path.equals("default_2")) {
             return SceneRenderer.class.getResourceAsStream("model_scene.xml");
+        } else if (path.equals("default_3")) {
+            return SceneRenderer.class.getResourceAsStream("default_csg_scene.xml");
         }
         return new FileInputStream(path);
     }

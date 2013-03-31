@@ -1,17 +1,18 @@
 package ru.spb.petrk.scenerenderer.parser.builders;
 
-import ru.spb.petrk.scenerenderer.parser.DeferredElementHandler;
 import java.util.ArrayList;
 import java.util.List;
+import ru.spb.petrk.scenerenderer.parser.DeferredElementHandler;
 import ru.spb.petrk.scenerenderer.parser.ElementContext;
 import ru.spb.petrk.scenerenderer.parser.ElementContextImpl;
 import ru.spb.petrk.scenerenderer.parser.ElementHandler;
 import ru.spb.petrk.scenerenderer.parser.PropertyNames;
 import ru.spb.petrk.scenerenderer.scene.Material;
-import ru.spb.petrk.scenerenderer.scene.objects.ModelSceneObject;
-import ru.spb.petrk.scenerenderer.scene.Primitive;
 import ru.spb.petrk.scenerenderer.scene.SceneObject;
+import ru.spb.petrk.scenerenderer.scene.objects.CSGSceneObject;
+import ru.spb.petrk.scenerenderer.scene.objects.ModelSceneObject;
 import ru.spb.petrk.scenerenderer.scene.objects.SimpleSceneObject;
+import ru.spb.petrk.scenerenderer.scene.objects.csg.CSGOperationNode;
 import ru.spb.petrk.scenerenderer.scene.primitives.Cone;
 import ru.spb.petrk.scenerenderer.scene.primitives.Cylinder;
 import ru.spb.petrk.scenerenderer.scene.primitives.Plane;
@@ -109,6 +110,16 @@ class SceneObjectsBuilder extends AbstractElementBuilder<List<SceneObject>> {
                 }
                 
             }));
+        } else if ("csg_operation".equals(name)) {
+            // not needed to be deferred
+            return new CSGOperationNodeBuilder(parentContext, new FinishCallback<CSGOperationNode>() {
+
+                @Override
+                public void handle(CSGOperationNode value) {
+                    SceneObjectsBuilder.this.sceneObjects.add(new CSGSceneObject(value));
+                }
+                
+            });
         }
         
         return null;
