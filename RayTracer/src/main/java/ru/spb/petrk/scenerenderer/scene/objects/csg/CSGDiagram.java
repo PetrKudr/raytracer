@@ -15,12 +15,11 @@ public interface CSGDiagram {
     List<Point> getCollisionPoints();
     
     /**
-     * @param first CSG diagram
      * @param second CSG diagram
      * @param operation to perform
      * @return result of operation
      */
-    CSGDiagram apply(CSGDiagram first, CSGDiagram second, CSGOperation operation);
+    CSGDiagram apply(CSGDiagram second, CSGOperation operation);
     
     
     /**

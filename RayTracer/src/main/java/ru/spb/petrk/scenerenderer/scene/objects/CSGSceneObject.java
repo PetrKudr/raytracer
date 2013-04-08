@@ -63,7 +63,7 @@ public class CSGSceneObject extends AbstractSceneObject {
         if (node instanceof CSGOperationNode) {
             CSGDiagram leftDiagram = walk(ray, node.getLeft());
             CSGDiagram rightDiagram = walk(ray, node.getRight());
-            return leftDiagram.apply(leftDiagram, rightDiagram, ((CSGOperationNode) node).getData());
+            return leftDiagram.apply(rightDiagram, ((CSGOperationNode) node).getData());
         } else if (node instanceof CSGObjectNode) {
             Collision collisions[] = ((CSGObjectNode) node).getData().trace(ray);
             

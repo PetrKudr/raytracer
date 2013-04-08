@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.NumberFormat;
-import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -19,28 +18,9 @@ import org.apache.commons.cli.PosixParser;
 import ru.spb.petrk.scenerenderer.parser.World;
 import ru.spb.petrk.scenerenderer.parser.WorldParser;
 import ru.spb.petrk.scenerenderer.scene.Camera;
-import ru.spb.petrk.scenerenderer.scene.CameraImpl;
-import ru.spb.petrk.scenerenderer.scene.Light;
-import ru.spb.petrk.scenerenderer.scene.LightImpl;
-import ru.spb.petrk.scenerenderer.scene.Material;
-import ru.spb.petrk.scenerenderer.scene.MaterialImpl;
-import ru.spb.petrk.scenerenderer.scene.Primitive;
-import ru.spb.petrk.scenerenderer.scene.Scene;
-import ru.spb.petrk.scenerenderer.scene.SceneImpl;
-import ru.spb.petrk.scenerenderer.scene.SceneObject;
 import ru.spb.petrk.scenerenderer.scene.Snapshot;
-import ru.spb.petrk.scenerenderer.scene.objects.CSGSceneObject;
-import ru.spb.petrk.scenerenderer.scene.objects.SimpleSceneObject;
-import ru.spb.petrk.scenerenderer.scene.objects.csg.CSGObjectNode;
-import ru.spb.petrk.scenerenderer.scene.objects.csg.CSGOperation;
-import ru.spb.petrk.scenerenderer.scene.objects.csg.CSGOperationNode;
-import ru.spb.petrk.scenerenderer.scene.objects.csg.CSGTreeNode;
-import ru.spb.petrk.scenerenderer.scene.primitives.Sphere;
-import ru.spb.petrk.scenerenderer.scene.tracing.RayTracerImpl;
-import ru.spb.petrk.scenerenderer.scene.tracing.refraction.FresnelRefractionStrategy;
 import ru.spb.petrk.scenerenderer.ui.ImagePanel;
 import ru.spb.petrk.scenerenderer.util.Listener;
-import ru.spb.petrk.scenerenderer.util.Vector3;
 
 
 
@@ -238,6 +218,8 @@ public class SceneRenderer {
             return SceneRenderer.class.getResourceAsStream("model_scene.xml");
         } else if (path.equals("default_3")) {
             return SceneRenderer.class.getResourceAsStream("default_csg_scene.xml");
+        } else if (path.equals("default_4")) {
+            return SceneRenderer.class.getResourceAsStream("bug.xml");
         }
         return new FileInputStream(path);
     }

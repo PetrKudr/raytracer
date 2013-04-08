@@ -23,20 +23,23 @@ public class CSGDiagramImpl implements CSGDiagram {
     }
 
     @Override
-    public CSGDiagram apply(CSGDiagram first, CSGDiagram second, CSGOperation operation) {
+    public CSGDiagram apply(CSGDiagram second, CSGOperation operation) {
         PointEmitter emitter;
+        
+        boolean isInsideFirst = points.size() > 0 ? points.get(0).isGoesOutside() : false;
+        boolean isInsideSecond = second.getCollisionPoints().size() > 0 ? second.getCollisionPoints().get(0).isGoesOutside() : false;
         
         switch (operation) {
             case union:
-                emitter = new UnionEmitter();
+                emitter = new UnionEmitter(isInsideFirst, isInsideSecond);
                 break;
                 
             case intersection:
-                emitter = new IntersectionEmitter();
+                emitter = new IntersectionEmitter(isInsideFirst, isInsideSecond);
                 break;
                 
             case subtraction:
-                emitter = new SubtrationEmitter();
+                emitter = new SubtrationEmitter(isInsideFirst, isInsideSecond);
                 break;
                 
             default:
@@ -45,7 +48,7 @@ public class CSGDiagramImpl implements CSGDiagram {
         
         List<Point> mergedPoints = new ArrayList<Point>();
         
-        Iterator<Point> firstIter = first.getCollisionPoints().iterator();
+        Iterator<Point> firstIter = getCollisionPoints().iterator();
         Iterator<Point> secondIter = second.getCollisionPoints().iterator();
         
         Point firstPoint = null;
@@ -121,8 +124,13 @@ public class CSGDiagramImpl implements CSGDiagram {
         private boolean insideFirst;
         
         private boolean insideSecond;
+
         
-        
+        public PointEmitter(boolean insideFirst, boolean insideSecond) {
+            this.insideFirst = insideFirst;
+            this.insideSecond = insideSecond;
+        }
+
         /**
          * @param point - point
          * @param fromFirst - is point from first diagram
@@ -157,6 +165,10 @@ public class CSGDiagramImpl implements CSGDiagram {
     
     private static class UnionEmitter extends PointEmitter {
 
+        public UnionEmitter(boolean insideFirst, boolean insideSecond) {
+            super(insideFirst, insideSecond);
+        }
+
         @Override
         protected Point handleFromFirst(Point point) {
             return handle(point, isInsideFirst(), isInsideSecond());
@@ -176,6 +188,10 @@ public class CSGDiagramImpl implements CSGDiagram {
     }
     
     private static class SubtrationEmitter extends PointEmitter {
+
+        public SubtrationEmitter(boolean insideFirst, boolean insideSecond) {
+            super(insideFirst, insideSecond);
+        }
 
         @Override
         protected Point handleFromFirst(Point point) {
@@ -205,6 +221,10 @@ public class CSGDiagramImpl implements CSGDiagram {
     
     private static class IntersectionEmitter extends PointEmitter {
 
+        public IntersectionEmitter(boolean insideFirst, boolean insideSecond) {
+            super(insideFirst, insideSecond);
+        }
+        
         @Override
         protected Point handleFromFirst(Point point) {
             return handle(point, isInsideFirst(), isInsideSecond());
